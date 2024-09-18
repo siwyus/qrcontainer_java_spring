@@ -1,15 +1,19 @@
 package com.siwyus.qrcontainer.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@Setter
-@Getter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -25,7 +29,4 @@ public class User {
     @Column(name = "create_date", nullable = false)
     private LocalDateTime createDate;
 
-    public User() {
-        this.createDate = LocalDateTime.now();
-    }
 }

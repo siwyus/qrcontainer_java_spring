@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -21,9 +22,11 @@ public class UserService {
             throw new RuntimeException("User with this email already exists.");
         }
 
-        User newUser = new User();
-        newUser.setEmail(email);
-        newUser.setPassword(passwordEncoder.encode(password));
+        User newUser = User.builder()
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .createDate(LocalDateTime.now())
+                .build();
 
         userRepository.save(newUser);
     }
