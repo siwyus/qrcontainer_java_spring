@@ -29,7 +29,7 @@ public class ContainerController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/qrcode")
     public ResponseEntity<byte[]> getQRCode(@PathVariable UUID id) {
         Optional<Container> containerData = containerService.getContainerById(id);
 
@@ -41,5 +41,12 @@ public class ContainerController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Container> getContainer(@PathVariable UUID id) {
+        Optional<Container> containerData = containerService.getContainerById(id);
+
+        return containerData.map(container -> new ResponseEntity<>(container, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

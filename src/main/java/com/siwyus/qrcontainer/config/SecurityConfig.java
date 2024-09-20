@@ -22,7 +22,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)  // disable CSRF protection for test purposes
                 .authorizeHttpRequests((requests) -> requests
                         // todo remove endpoints other than auth
-                        .requestMatchers("/api/auth/register", "/api/auth/login", "/api/containers", "/api/containers/**").permitAll()  // allow access to registration and login endpoints
+                        .requestMatchers("/api/auth/register", "/api/auth/login", "/api/containers", "/api/containers/**", "/api/items", "/api/items/**").permitAll()  // allow access to registration and login endpoints
                         .anyRequest().authenticated()  // require authentication for all other requests
                 ).httpBasic(Customizer.withDefaults());  // use basic authentication
 
