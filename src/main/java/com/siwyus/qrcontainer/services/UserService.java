@@ -31,7 +31,7 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    public void loginUser(String email, String password) {
+    public User loginUser(String email, String password) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
             throw new RuntimeException("Invalid email or password.");
@@ -40,6 +40,8 @@ public class UserService {
         if (!passwordEncoder.matches(password, user.get().getPassword())) {
             throw new RuntimeException("Invalid email or password.");
         }
+
+        return user.get();
     }
 }
 
