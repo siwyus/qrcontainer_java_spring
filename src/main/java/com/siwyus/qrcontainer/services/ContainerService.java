@@ -1,6 +1,7 @@
 package com.siwyus.qrcontainer.services;
 
 import com.siwyus.qrcontainer.model.Container;
+import com.siwyus.qrcontainer.model.User;
 import com.siwyus.qrcontainer.repository.ContainerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ public class ContainerService {
 
     private final ContainerRepository containerRepository;
     private final QRCodeService qrCodeService;
+    private final AuthService authService;
 
     public Container createContainer(String name) throws Exception {
         UUID uuid = UUID.randomUUID();
+        User user = authService.getCurrentUser();
         byte[] qrCode = qrCodeService.generateQRCode(uuid.toString());
 
         Container container = Container.builder()
@@ -26,6 +29,7 @@ public class ContainerService {
                 .modifiedDate(LocalDateTime.now())
                 .name(name)
                 .qrCode(qrCode)
+                .user(user)
                 .build();
 
         return containerRepository.save(container);
